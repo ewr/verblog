@@ -10,7 +10,7 @@ module Verblog
   				DATE_FORMAT(timestamp,'%Y/%m') as date,
   				count(*) as count
   			from 
-  				stories 
+  				#{Story.table_name} 
   			where 
   				status = 5 
   			group by 
@@ -45,9 +45,9 @@ module Verblog
 
   		@date = Date.new(*date)
 		
-  		@stories = Story.published.where(
-  		  "stories.timestamp > ? and stories.timestamp < ?",@date, @date >> 1
-  		).order("stories.timestamp asc").paginate(:page => params[:page] || 1,:per_page => 12)
+      @stories = Story.published.where(
+        :timestamp => @date..(@date >> 1)
+  		).order("timestamp asc").paginate(:page => params[:page] || 1,:per_page => 12)
     end
   
     #----------

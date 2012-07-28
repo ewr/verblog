@@ -1,0 +1,14 @@
+<% @PAGE_TITLE = "Archives"%>
+<% @PAGE_IDENT = :archives %>
+
+
+<h1>Archives</h1>
+
+<p>
+    It's been a long journey.  Since the first post went up on this site in November 1998, 
+    there have been <%= number_with_delimiter @count-1 %> more to follow it.  
+</p>
+
+<div id="archives">
+<%= render :partial => "archive_year", :collection => @archives %>
+</div>

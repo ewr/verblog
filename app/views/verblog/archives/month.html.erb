@@ -1,0 +1,16 @@
+<% @PAGE_TITLE = "Archives for " + @date.strftime("%B %Y") %>
+<% @PAGE_IDENT = :archives %>
+
+<h1><%= @PAGE_TITLE %></h1>
+
+<p><b><%= link_to "Back to Archives", archives_path %></b></p>
+
+<% links = will_paginate(@stories, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
+
+<% if @stories.current_page > 1 %>
+<div style="text-align: center"><%= links %></div>
+<% end %>
+
+<%= render :partial => "verblog/shared/story/full/story", :collection => @stories %>
+
+<div style="text-align: center"><%= links %></div>

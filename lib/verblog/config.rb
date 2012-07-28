@@ -1,19 +1,12 @@
 module Verblog
   class Config
+    @@config = {}
     class << self
-      def user_model(model=nil)
-        @user_model = model if model
-        @user_model #|| DEFAULT_USER_MODEL
-      end
-      
-      def asset_model(model=nil)
-        @asset_model = model if model
-        @asset_model #|| DEFAULT_ASSET_MODEL
-      end
-      
-      def blog_path(path=nil)
-        @blog_path = path if path
-        @blog_path || nil
+      ["user_model","asset_model","blog_path","title","base_url","description"].each do |f|
+        define_method f do |input=nil|
+          @@config[f] = input if input
+          @@config[f]
+        end
       end
     end
   end

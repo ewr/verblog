@@ -133,7 +133,7 @@ module Verblog
     #----------
 
     def remote_story_link
-      return "http://ericrichardson.com" + self.link_path
+      return Verblog::Config.base_url + self.link_path
     end
 
   	#----------

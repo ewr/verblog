@@ -1,0 +1,14 @@
+<div class="year">
+<b> <%= archive_year[0][:year] %></b>
+<ul class="archives">
+	<% archive_year.each do |m| %>
+		<li>
+			<a href="<%= archive_month_path(m[:year],m[:month]) %>">
+			<%= Date::MONTHNAMES[ m[:month].to_i ] %> 
+			(<%= m[:count] %>)
+			</a>
+		</li>
+	<% end %>
+  <br style="clear:both;"/>
+</ul>
+</div>

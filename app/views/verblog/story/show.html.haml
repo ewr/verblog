@@ -8,7 +8,7 @@
     - if @story.assets.any?
         %meta{ :property => "og:image", :content => @story.assets.first.asset.lsquare.url }
 		
-    %meta{ :property => "og:site_name", :content => "ericrichardson.com" }
+    %meta{ :property => "og:site_name", :content => Verblog::Config.title }
     
 .story_full
     %h1= @PAGE_TITLE

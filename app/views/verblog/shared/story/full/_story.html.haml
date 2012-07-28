@@ -1,0 +1,9 @@
+.story.full
+    %h1= link_to story.title, story.story_link
+    %h3.byline 
+        = smart_date(story.timestamp)
+        by #{story.author.name}
+	
+    - cache("stories/#{story.id}/full") do
+        = render_asset story, "home"
+        = markdown(story.intro + ( story.body? ? " &mdash; " + link_to("Continue Reading...",story.story_link, :class => "continue") : ""))

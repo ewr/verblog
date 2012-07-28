@@ -1,0 +1,11 @@
+#asset_slideshow
+%br/
+:javascript
+	var w = $("#asset_slideshow").width()
+		
+	var slides = new AssetHost.Slideshow({
+		imgwidth: w,
+		imgheight: #{ assets.first.asset.wide.height + 20 },
+		assets: #{ raw assets.to_json },
+		el: "#asset_slideshow"
+	})

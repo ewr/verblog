@@ -1,0 +1,14 @@
+<div class="recent_stories">
+<h2>Recent Posts:</h2>
+
+<% cache("sidebar/stories") do %>
+<ul class="stories">
+<% for s in verblog_recent_stories %>
+    <li>
+    <i><%= smart_days_ago s.timestamp %></i>
+    <br/><%= link_to s.title, s.story_link %>
+    </li>
+<% end %>
+</ul>
+<% end %>
+</div>

@@ -1,0 +1,27 @@
+<% @PAGE_TITLE = "Edit Story :: #{@story.title}" %>
+
+<div class="verblog_compose">
+<%= form_for :story, :url => verblog_story_path(), :html => { :method => :put } do |f| %>
+    
+    <h3>Title</h3>
+    <%= f.text_field :title %>
+    
+    <h3>Story</h3>
+    <%= f.text_area :intro, :rows => 12 %>
+    
+    <%= f.text_area :body, :rows => 18 %>
+    
+    <hr/>
+    
+    <%= submit_tag "Preview" %>
+    
+    <hr/>
+    
+    <h3>Status</h3>
+    
+    <%= f.select :status, Story::AUTHOR_OPTIONS %>
+    
+    <p><%= submit_tag "Save" %></p>
+    
+<% end %>
+</div>

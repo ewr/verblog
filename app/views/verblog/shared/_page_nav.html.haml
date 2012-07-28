@@ -1,0 +1,9 @@
+%ul.nav
+	%li.newer
+		- if @stories.current_page > 1
+			= link_to "&laquo; &laquo; Newer Posts".html_safe, page_path(:page => @stories.current_page - 1)
+		- else
+			&nbsp;
+	%li.older
+		- if @stories.total_pages > @stories.current_page
+			= link_to "Older Posts &raquo; &raquo;".html_safe, page_path(:page => @stories.current_page + 1)

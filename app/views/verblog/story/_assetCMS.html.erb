@@ -1,0 +1,26 @@
+<hr/>
+<h2>Assets</h2>
+<h3>Photo Scheme</h3>
+<%= form_for :story, :remote => true, :url => scheme_verblog_story_path(@story), :method => :post do |f| %>
+	<%= f.select :story_asset_scheme, Story::ASSET_SCHEMES %>
+	<%= submit_tag "Set" %>
+<% end %>
+
+<hr/>
+
+<div id="assetcms"></div>
+<% content_for :footerjss do %>
+	assetCMS = new AssetHost.railsCMS(<%= raw @story.assets.to_json %>,{el:"#assetcms"})
+
+	assetCMS.bind("assets",function(data) {
+		// when we get assets json from the chooser, save it back to the story
+		console.log("assets is ",data)
+		$.ajax("<%= assets_verblog_story_path(@story) %>",{
+			type:"POST",
+			data:{assets:JSON.stringify(data)},
+			success:function() {
+				$("#assetcms").effect("highlight")
+			}
+		})
+	})
+<% end %>

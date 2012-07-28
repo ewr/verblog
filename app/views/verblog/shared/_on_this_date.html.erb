@@ -1,0 +1,18 @@
+<h2>Previously on this date...</h2>
+
+<% cache("sidebar/on_date/#{Date.today.strftime("%Y%m%d")}") do %>
+  <ul class="nav nav-list">
+	<% for y in verblog_on_this_date %>
+		<% if y[1].length > 0 %>
+		  <li class="nav-header"><%= y[0] %></li>
+
+			<% for p in y[1] %>
+				<li>
+				  <a href="<%= p.story_link %>"><%= p.title %></a>
+				  <p><%= clipping strip_tags(markdown(p.intro)) %></p>
+				</li>
+			<% end %>
+     <% end %>
+	<% end %>
+  </ul>
+<% end %>

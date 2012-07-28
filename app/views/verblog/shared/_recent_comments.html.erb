@@ -1,0 +1,11 @@
+<div class="recent_comments">
+    <h2>Recent Comments:</h2>
+
+    <% cache("sidebar/comments") do %>
+        <ul class="comments">
+        <% for c in verblog_recent_comments() %> 
+            <li class="<%= cycle("even","odd") %>"><a href="<%= c.link %>"><b><%= c.user ? c.user.name : c.name%></b> on <i><%= chop_at_word c.story.title %></i></a></li>
+        <% end %>
+        </ul>
+    <% end %>
+</div>

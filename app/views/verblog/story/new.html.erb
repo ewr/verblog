@@ -1,0 +1,29 @@
+<% @PAGE_TITLE = "New Story" %>
+
+<h1><%= @PAGE_TITLE %></h1>
+<div class="verblog_compose">
+<%= semantic_form_for :story, :url => verblog_story_index_path(), :html => { :method => :post } do |f| %>
+    
+	<%= f.inputs "Metadata" do %>
+		<%= f.input :title %>
+	<% end %>
+    
+	<%= f.inputs "Story" do %>
+		<%= f.input :intro, :as => :text, :input_html => {:rows => 12} %>
+		<%= f.input :body, :as => :text, :input_html => {:rows => 18} %>
+	<% end %>
+        
+    <hr/>
+    
+    <%= submit_tag "Preview" %>
+    
+    <hr/>
+    
+    <h3>Status</h3>
+    
+    <%= f.select :status, Story::AUTHOR_OPTIONS, :value => Story::STATUS_DRAFT %>
+    
+    <p><%= submit_tag "Save" %></p>
+    
+<% end %>
+</div>

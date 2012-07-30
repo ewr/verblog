@@ -33,8 +33,8 @@
         .authoropts
             %h2 Author Options
             
-            %p This story is currently in the #{ Story::STATUS_TEXT[ @story.status ] } stage.
+            %p This story is currently in the #{ Verblog::Story::STATUS_TEXT[ @story.status ] } stage.
             
-            %p= link_to "Edit Story", edit_verblog_story_path(@story)
+            %p= link_to "Edit Story", edit_story_path(@story)
             
             = render :partial => "assetCMS"

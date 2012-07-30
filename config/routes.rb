@@ -1,6 +1,6 @@
 Verblog::Engine.routes.draw do
   # Verblog routes
-  match '/:year/:month/:id', :to => 'story#show', :as => :story, :constraints => {
+  match '/:year/:month/:id', :to => 'story#show', :constraints => {
     :year => /\d+/,
     :month => /\d+/,
     :id => /[\w-]+/

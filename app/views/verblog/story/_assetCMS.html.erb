@@ -1,8 +1,8 @@
 <hr/>
 <h2>Assets</h2>
 <h3>Photo Scheme</h3>
-<%= form_for :story, :remote => true, :url => scheme_verblog_story_path(@story), :method => :post do |f| %>
-	<%= f.select :story_asset_scheme, Story::ASSET_SCHEMES %>
+<%= form_for :story, :remote => true, :url => scheme_story_path(@story), :method => :post do |f| %>
+<%= f.select :story_asset_scheme, Verblog::Story::ASSET_SCHEMES %>
 	<%= submit_tag "Set" %>
 <% end %>
 
@@ -15,7 +15,7 @@
 	assetCMS.bind("assets",function(data) {
 		// when we get assets json from the chooser, save it back to the story
 		console.log("assets is ",data)
-		$.ajax("<%= assets_verblog_story_path(@story) %>",{
+		$.ajax("<%= assets_story_path(@story) %>",{
 			type:"POST",
 			data:{assets:JSON.stringify(data)},
 			success:function() {

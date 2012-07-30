@@ -6,3 +6,12 @@
 = render :partial => "verblog/shared/story/full/story", :collection => @stories
 
 = render :partial => "verblog/shared/page_nav"
+
+- content_for :sidebar do
+    - if @current_user && @current_user.author?
+        .authoropts
+            %h2 Author Options
+            
+            = link_to "Start a New Story", new_story_path
+            
+            

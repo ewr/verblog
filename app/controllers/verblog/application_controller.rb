@@ -1,5 +1,5 @@
 module Verblog
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ::ApplicationController
     layout "verblog"
     helper Verblog::ApplicationHelper
     
@@ -27,7 +27,7 @@ module Verblog
     # Require the author flag to be set 
     def verblog_only_author
       if !@current_user || !@current_user.author?
-        redirect_to verblog_home_path and return
+        redirect_to home_path and return
       end
     end
     

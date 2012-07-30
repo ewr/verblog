@@ -77,8 +77,7 @@ module Verblog
       @story.story_asset_scheme = params[:story][:story_asset_scheme]
       @story.save
     
-      redirect_to verblog_story_path(@story)
-    
+      redirect_to @story.link_path
     end
   
     #----------

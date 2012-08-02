@@ -7,10 +7,7 @@ module Verblog
       )
     
       if @current_user && @current_user.author?
-        @drafts = Verblog::Story.find(:all,
-          :conditions => ["status = ? or status = ?",Story::STATUS_DRAFT,Story::STATUS_PENDING],
-          :order => "status desc, updated_at desc"
-        )
+        @drafts = Verblog::Story.where(:status => [Verblog::Story::STATUS_DRAFT,Verblog::Story::STATUS_PENDING]).order("status desc, updated_at desc")
       end
     end
   

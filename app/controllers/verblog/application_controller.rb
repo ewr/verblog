@@ -14,13 +14,13 @@ module Verblog
       else
         # make sure they're an author
         if !@current_user || !@current_user.author?
-          redirect_to verblog_home_path and return
+          redirect_to home_path and return
         else
           # ok
         end
       end
     rescue
-      redirect_to verblog_home_path
+      redirect_to home_path
     end
   
   

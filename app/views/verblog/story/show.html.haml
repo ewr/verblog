@@ -1,4 +1,4 @@
-- @PAGE_TITLE = (@story.published?) ? @story.title : (Story::STATUS_TEXT[ @story.status ] + " :: " + @story.title)
+- @PAGE_TITLE = (@story.published?) ? @story.title : (Verblog::Story::STATUS_TEXT[ @story.status ] + " :: " + @story.title)
 
 - content_for :meta do
     %meta{ :property => "og:title", :content => @PAGE_TITLE }

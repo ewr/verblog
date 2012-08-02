@@ -14,4 +14,6 @@
             
             = link_to "Start a New Story", new_story_path
             
-            
+            %ul.drafts
+                - for s in @drafts
+                    %li= link_to "#{s.title} (Updated #{time_ago_in_words s.updated_at} ago)", story_path(s)

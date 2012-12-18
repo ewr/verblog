@@ -3,14 +3,14 @@ module Verblog
     cattr_reader :per_page
     @@per_page = 5
   
-    belongs_to :author, :class_name => Verblog::Config.user_model
+    #belongs_to :author, :class_name => Verblog::Config.user_model
 
     has_many :assets, :class_name => "StoryAsset", :order => "position asc", :dependent => :destroy
+    has_many :authors, :class_name => "StoryAuthor", :dependent => :destroy
 
-  	attr_protected :user, :timestamp, :status
+  	attr_protected :timestamp
 	
   	validates_presence_of :title
-  	validates_presence_of :author
     validate :needs_text_to_publish
 
   	before_save :update_url_string
@@ -53,21 +53,8 @@ module Verblog
       [ 'User Comments Only', Story::COMMENTS_MEMBERS_ONLY ],
       [ 'Allow All Comments', Story::COMMENTS_ALL_ALLOWED ]
     ]
-  
-	
-  	#----------
-	
-  	# Photo Schemes
-	
-  	PHOTO_SCHEME = [
-  	  ["None",0],
-  	  ["Float Right Small",1],
-  	  ["Float Left Small",2],
-  	  ["Two Landscape Across",3],
-  	  ["Float Left / Story Zoom",4],
-  	  ["Three Vert Across", 5],
-  	  ["Wide Special Home",6]
-  	]
+    
+    #----------
 	
   	ASSET_SCHEMES = [
   	  ["Wide",""],
@@ -103,10 +90,82 @@ module Verblog
 
   	#----------
 
-    def can_edit?(user = @current_user)
+    def can_edit?(user = current_user)
       user && ( user.editor || (user.author && self.users.include?(user)))
     end
 
+    #----------
+        
+    # Returns a two-dimensional array
+    # authors[0] is primary authors
+    # authors[1] is secondary authors
+    def sorted_authors
+      authors = [[],[]]
+      
+      if self.authors.length == 1
+        authors[0] << self.authors[0]
+      else
+        self.authors.each do |a|
+          if a.is_primary
+            authors[0] << a
+          else
+            authors[1] << a
+          end
+        end
+        
+        [0,1].each do |i|
+          authors[i] = authors[i].sort { |a,b|
+            aN = ((a.respond_to?(:user) && a.user) ? a.user.name : a.name).split(" ").reverse.join("")
+            bN = ((b.respond_to?(:user) && b.user) ? b.user.name : b.name).split(" ").reverse.join("")
+            
+            aN <=> bN
+          }
+        end
+      end
+      
+      return authors
+    end
+    
+    #----------
+    
+    def author_names
+      names = ''
+      
+      if self.authors.length == 1
+        names = (self.authors[0].respond_to?(:user) && self.authors[0].user) ? self.authors[0].user.name : self.authors[0].name
+      else
+        authors = self.sorted_authors
+        
+        [0,1].each do |i|
+          authors[i] = authors[i].collect { |a| (a.respond_to?(:user) && a.user) ? a.user.name : a.name }
+        end
+        
+        names = Story.join_authors(authors)
+      end
+      
+      return names
+    end
+    
+    #----------
+    
+    def self.join_authors(authors)
+      if !authors
+        return nil
+      end
+      
+      names = []
+      
+      [0,1].each do |i|
+        if authors[i].length == 1
+          names << authors[i][0]
+        elsif authors[i].length > 1
+          names << [ authors[i].pop, authors[i].join(", ") ].reverse.join(" and ")
+        end
+      end
+      
+      return names.join(" with ")
+    end
+    
     #----------
 
     # Generate a link to the story in the form /YYYY/MM/IDID-stringified-title

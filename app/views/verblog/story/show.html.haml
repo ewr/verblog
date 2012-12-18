@@ -16,7 +16,8 @@
         Posted 
         = @story.timestamp.strftime("%A, %B %d, %Y, at %I:%M%p")
         by 
-        = @story.author.name
+        = render_authors(@story) do |a|
+            = link_to a.user.name, ""
     
     - cache("stories/#{@story.id}/show") do
         - register_content @story
@@ -30,7 +31,7 @@
     .fb-comments{ :data => { :href => @story.remote_story_link, :num_posts => 5, :width => 620 }}
 
 - content_for :sidebar do
-    - if @current_user && @current_user.author?
+    - if _verblog_is_author
         .authoropts
             %h2 Author Options
             

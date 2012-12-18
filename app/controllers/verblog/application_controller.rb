@@ -3,7 +3,14 @@ module Verblog
     layout "verblog"
     helper Verblog::ApplicationHelper
     
+    helper_method :_verblog_is_author
+    
     protected
+    def _verblog_is_author
+      current_user
+    end
+    
+    
     # Load a story from params[:story_id] or params[:id], populating @story.  For a non-live story, 
     # require the user to be an author
     def verblog_load_story
@@ -13,7 +20,7 @@ module Verblog
         # they're fine
       else
         # make sure they're an author
-        if !@current_user || !@current_user.author?
+        if !_verblog_is_author
           redirect_to home_path and return
         else
           # ok
@@ -26,7 +33,7 @@ module Verblog
   
     # Require the author flag to be set 
     def verblog_only_author
-      if !@current_user || !@current_user.author?
+      if !current_user
         redirect_to home_path and return
       end
     end

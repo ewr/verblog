@@ -3,6 +3,19 @@ module Verblog
     isolate_namespace Verblog
     
     @@mpath = nil
+    @@markdown = nil
+    
+    #----------
+    
+    def markdown(text)
+      return "" if text.empty?
+      
+      if !@@markdown
+        @@markdown = Verblog::Config.markdown.call()
+      end
+      
+      @@markdown.render(text)
+    end
     
     #----------
         

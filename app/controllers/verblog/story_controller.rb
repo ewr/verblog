@@ -29,10 +29,9 @@ module Verblog
       @story = Story.new(params[:story])
         
       @story.timestamp = Time.now()
-      @story.author = @current_user
+      #@story.author = @current_user
     
       if @story.save
-
         flash[:notice] = "Story saved successfully."
         redirect_to @story.story_link
       else

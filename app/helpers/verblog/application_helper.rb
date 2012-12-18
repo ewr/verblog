@@ -1,9 +1,33 @@
 module Verblog
   module ApplicationHelper
-    require 'rdiscount' # add this to the top of your helper
     def markdown(text)
-        text.blank? ? "" : RDiscount.new(text).to_html.html_safe
+      Verblog::Engine.markdown(text)
     end
+    
+    def _verblog_is_author
+      current_user
+      
+    end
+    
+    #----------
+    
+    # Sorts authors, runs the given block on each of them, and joins them
+    def render_authors(story,&blk)
+      if story.authors.length == 1
+        a = blk.call(story.authors.first)
+        return a
+      else
+        authors = story.sorted_authors
+        
+        [0,1].each do |i|
+          authors[i] = authors[i].collect { |a| aa = capture(a,&blk).gsub(/(?:^\s+|\s+$)/,'') }
+        end
+        
+        return Story.join_authors(authors).html_safe
+      end
+    end
+    
+    #----------
     
     def render_asset(content,context)
       # short circuit if it's obvious we're getting nowhere

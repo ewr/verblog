@@ -6,7 +6,7 @@ module Verblog
         :page => params[:page] || 1
       )
     
-      if @current_user && @current_user.author?
+      if _verblog_is_author
         @drafts = Verblog::Story.where(:status => [Verblog::Story::STATUS_DRAFT,Verblog::Story::STATUS_PENDING]).order("status desc, updated_at desc")
       end
     end

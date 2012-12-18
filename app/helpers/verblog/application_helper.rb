@@ -10,7 +10,10 @@ module Verblog
       if !content || !content.respond_to?("assets") || !content.assets.any?
         return ''
       end
-
+      
+      # Register a content trigger on the assets collection
+      register_content "#{content.obj_key}:assets"
+      
       # look for a scheme on the content object
       scheme = content["#{context}_asset_scheme"] || "default"
 

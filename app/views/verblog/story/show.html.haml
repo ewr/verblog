@@ -19,6 +19,7 @@
         = @story.author.name
     
     - cache("stories/#{@story.id}/show") do
+        - register_content @story
         = render_asset @story, "story"
         = raw markdown @story.intro
         = raw markdown @story.body

@@ -14,6 +14,7 @@ module Verblog
     validate :needs_text_to_publish
 
   	before_save :update_url_string
+    before_save :expire_content_caches
 
   	CLIPPING_LENGTH = 150
 	
@@ -191,6 +192,12 @@ module Verblog
   	def update_url_string
   	  self.url_string = Story.generate_url_string self.title
   	end
+    
+    def expire_content_caches
+      if Rails.cache.is_a?(ActiveSupport::Cache::RedisContentStore)
+        Rails.cache.expire_obj(self)
+      end
+    end
 
   	#----------
 

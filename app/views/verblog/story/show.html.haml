@@ -32,11 +32,4 @@
 
 - content_for :sidebar do
     - if _verblog_is_author
-        .authoropts
-            %h2 Author Options
-            
-            %p This story is currently in the #{ Verblog::Story::STATUS_TEXT[ @story.status ] } stage.
-            
-            %p= link_to "Edit Story", edit_story_path(@story)
-            
-            = render :partial => "assetCMS"
+        = render :partial => "publish_tools"

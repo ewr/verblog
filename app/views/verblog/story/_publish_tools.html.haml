@@ -1,0 +1,12 @@
+.authoropts
+  %h2 Author Options
+            
+  %p= link_to "Edit Story", edit_story_path(@story), :class => "btn btn-primary"
+
+  %hr/
+  
+  = render :partial => "set_status"
+  
+  = render :partial => "set_authors"
+              
+  = render :partial => "assetCMS"

@@ -10,6 +10,10 @@ Verblog::Engine.routes.draw do
     member do
       post :assets
       post :scheme
+      post :status
+      post :preview
+      post :authors
+      get :authors
     end
   end
       

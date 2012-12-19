@@ -3,7 +3,7 @@
 <h3>Photo Scheme</h3>
 <%= form_for :story, :remote => true, :url => scheme_story_path(@story), :method => :post do |f| %>
 <%= f.select :story_asset_scheme, Verblog::Story::ASSET_SCHEMES %>
-	<%= submit_tag "Set" %>
+	<%= submit_tag "Set", :class => "btn" %>
 <% end %>
 
 <hr/>

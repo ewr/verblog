@@ -7,5 +7,14 @@ module Verblog
     
     scope :primary, where(:is_primary => true)
     scope :secondary, where(:is_primary => false)
+    
+    def name
+      if self.user
+        self.user.name
+      else
+        self.name
+      end
+    end  
+      
   end
 end

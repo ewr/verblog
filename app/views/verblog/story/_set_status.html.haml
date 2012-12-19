@@ -1,0 +1,5 @@
+%p This story is currently in the #{ Verblog::Story::STATUS_TEXT[ @story.status ] } stage.
+  
+= form_for @story, :url => story_path(@story) do |f|
+  = f.select :status, Verblog::Story::AUTHOR_OPTIONS
+  = submit_tag "Set Status", :class => "btn"

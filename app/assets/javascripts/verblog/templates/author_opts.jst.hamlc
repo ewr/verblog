@@ -1,0 +1,5 @@
+%ul
+  - for a in @options
+    %li{ :data => { :id => a.id } }= a.name
+    
+%button.btn.btn-primary Add Author

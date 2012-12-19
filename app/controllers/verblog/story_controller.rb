@@ -69,6 +69,55 @@ module Verblog
     
       render :text => "Assets is #{@story.assets}"
     end
+    
+    #----------
+    
+    def status
+      status = params[:story][:status].to_i
+      
+      # support for checking publish rights
+      if status == Story::STATUS_LIVE && current_user.respond_to?(:can_publish?) && !current_user.can_publish?
+        flash[:notice] = "You do not have rights to publish."
+        redirect_to story_path(@story) and return
+      end
+      
+      @story.status = status
+      
+      if @story.save
+        # deliver status message
+        # TODO: Implement status message
+        
+        flash[:notice] = "Successfully set status to #{ Story::STATUS_TEXT[ @story.status ]}."
+        redirect_to story_path(@story)
+      else
+        flash[:notice] = "Error setting status: #{ @story.errors.full_messages.join(" | ") }"
+        redirect_to story_path(@story)
+      end
+    end
+    
+    #----------
+    
+    # Return two structures: the collection of authors currently on the story and 
+    # the collection of authors eligible to be added
+    def authors
+      # get the authors on the story
+      @authors = @story.authors.as_json :methods => :name
+      
+      u = Verblog::Config.user_model.constantize
+      
+      @all = u.respond_to?(:is_author) ? u.is_author.all : u.all
+      
+      render :json => {
+        :authors => @story.authors.as_json( :only => [:id, :user_id, :is_primary], :methods => [:name] ),
+        :all => @all.as_json( :only => [:id,:name] )
+      }
+    end
+    
+    #----------
+    
+    def preview
+      
+    end
   
     #----------
   

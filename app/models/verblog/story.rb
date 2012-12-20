@@ -57,8 +57,9 @@ module Verblog
     #----------
 	
   	ASSET_SCHEMES = [
-  	  ["Wide",""],
-  	  ["Slideshow","slideshow"]
+      ["Wide",""],
+      ["Float Right","right"],
+      ["Slideshow","slideshow"]
   	]
 
   	#----------

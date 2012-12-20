@@ -8,6 +8,8 @@ module Verblog
     validates :position, :presence => true
     
     before_save :expire_content_caches
+    
+    attr_accessible :asset_id, :caption, :position
   
     #----------
   

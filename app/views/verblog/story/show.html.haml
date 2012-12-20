@@ -6,7 +6,7 @@
     %meta{ :property => "og:url", :content => @story.remote_story_link }
 	
     - if @story.assets.any?
-        %meta{ :property => "og:image", :content => @story.assets.first.asset.lsquare.url }
+        %meta{ :property => "og:image", :content => @story.assets.first.asset.thumb.url }
 		
     %meta{ :property => "og:site_name", :content => Verblog::Config.title }
     

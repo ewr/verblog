@@ -1,7 +1,78 @@
+@orange_color: #dd4d0b;
+@paper_color: #f5f4f0;
+
 
 .verblog_compose {
   input, textarea {
     width: 98%;
   }
 }
-  
+
+div.pf {
+    display: inline;
+    font: 11px normal Arial, Helvetica, sans-serif;
+    
+    &.pfL {
+        float: left;
+        margin: 8px 12px 0 0;
+    }
+
+    &.pfR {
+        float: right;
+        margin: 8px 0 0 12px;
+    }
+
+    &.pfW {
+        display: block;
+        margin: 16px auto 12px auto;
+    }
+
+    &.pfLV {
+        float: left;
+        margin-right: 12px;
+    }
+    
+    p {
+        font-size: inherit;
+        line-height: inherit;
+        color: #555;
+        padding-top: 5px;
+    }
+
+    img {
+        border: 0;
+        margin-bottom: 4px;
+    }
+
+    .pfP {
+        display: block;
+        text-align: right;
+        font-size: 9px;
+        margin-top: -2px;
+        color: #999;
+    }
+}
+
+.blog_post .pf, .fullstory .pf {
+    margin-top: 14px;
+}
+
+div.gallery_count {
+    position: relative;
+    text-align: center;
+    top: -27px;
+    margin-bottom: -27px;
+    background: fadeout(@orange_color,40%);
+    width: 156px;
+    font: bold 18px myriad-pro, sans-serif;
+    color: #fff;
+    
+    a {
+       color: inherit;
+       text-decoration: inherit;
+    }
+    
+    a:hover {
+        text-decoration: none;
+    }
+}

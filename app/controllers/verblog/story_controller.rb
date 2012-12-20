@@ -1,5 +1,5 @@
 module Verblog
-  class StoryController < ApplicationController
+  class StoryController < ::Verblog::ApplicationController
   
     before_filter :verblog_only_author, :except => [:index,:show]
     before_filter :verblog_load_story, :except => [:index,:new,:create]

@@ -1,5 +1,5 @@
 - register_content assets.first
-.pf.pfW{ :style => "width: #{ assets.first.asset.wide.width }px"}
-	= assets.first.asset.wide.tag
+.pf.pfR{ :style => "width: #{ assets.first.asset.modal.width }px"}
+	= assets.first.asset.modal.tag
 	.pfP= assets.first.asset.owner
 	= markdown(assets.first.caption).html_safe

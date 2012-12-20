@@ -1,5 +1,5 @@
-%ul
+%select{:style => "width: 70%"}
   - for a in @options
-    %li{ :data => { :id => a.id } }= a.name
+    %option{ :value => a.id }= a.name
     
-%button.btn.btn-primary Add Author
+%button.btn.btn-primary Add

@@ -8,6 +8,8 @@ module Verblog
     scope :primary, where(:is_primary => true)
     scope :secondary, where(:is_primary => false)
     
+    validates :user_id, :uniqueness => { :scope => :story_id }
+    
     def name
       if self.user
         self.user.name

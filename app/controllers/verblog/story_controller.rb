@@ -27,11 +27,13 @@ module Verblog
   
     def create
       @story = Story.new(params[:story])
-        
+      @story.status = Story::STATUS_DRAFT
       @story.timestamp = Time.now()
-      #@story.author = @current_user
     
       if @story.save
+        # add the creator as an author
+        @story.authors.create :user => current_user
+        
         flash[:notice] = "Story saved successfully."
         redirect_to @story.story_link
       else
@@ -96,27 +98,12 @@ module Verblog
     end
     
     #----------
-    
-    # Return two structures: the collection of authors currently on the story and 
-    # the collection of authors eligible to be added
-    def authors
-      # get the authors on the story
-      @authors = @story.authors.as_json :methods => :name
-      
-      u = Verblog::Config.user_model.constantize
-      
-      @all = u.respond_to?(:is_author) ? u.is_author.all : u.all
-      
-      render :json => {
-        :authors => @story.authors.as_json( :only => [:id, :user_id, :is_primary], :methods => [:name] ),
-        :all => @all.as_json( :only => [:id,:name] )
-      }
-    end
-    
-    #----------
-    
+        
     def preview
-      
+      # we add title, intro and body into the @story object for preview, but don't save
+      @story.attributes = params[:story] if params[:story]
+      #render :partial => "body"
+      render :formats => [:js]
     end
   
     #----------
@@ -126,12 +113,6 @@ module Verblog
       @story.save
     
       redirect_to @story.link_path
-    end
-  
-    #----------
-  
-    def preview
-    
     end
   
     #----------

@@ -1,4 +1,6 @@
 #= require "verblog/templates/author_opts"
+#= require "verblog/templates/author_view"
+#= require "verblog/templates/preview"
 
 class Verblog.AuthorWidget
   constructor: (el,url) ->
@@ -11,39 +13,98 @@ class Verblog.AuthorWidget
     @el.append @aEl, @optsEl
     
     @authors = new AuthorWidget.Authors()
+    @authors.url = url
     
     @authorsView = new AuthorWidget.AuthorsView collection:@authors
-    @aEl.html @authorsView.render().el
+    @aEl.html @authorsView.render()
     
     @optsView = new AuthorWidget.OptsView()
     @optsEl.html @optsView.render().el
     
-    # get our current / available authors
+    # -- set up a handler for adding authors -- #
+    
+    @optsView.on "click", (id) =>      
+      # post to create an author
+      $.post url, user_id:id, (data) =>
+        @authors.add data
+        @_rebuildAuthorOpts()
+      .error (resp) =>
+        alert("Error: #{resp.responseText}")
+        
+    @authors.on "remove", => @_rebuildAuthorOpts()
+    
+    # -- get our current / available authors -- #
+    
     $.getJSON url, (obj) =>
+      # stash the list of all possible authors
+      @all = obj.all
+      
       # reset the authors collection
       @authors.reset obj.authors
       
-      ids = a.user_id for a in obj.authors
+      @_rebuildAuthorOpts(true)
       
-      # rebuild the opts array
-      
-      @optsView.render _(obj.all).reject (u) => @authors.where(id:u.id)
+  #----------
+  
+  _rebuildAuthorOpts: (skip_animation=false)->
+    ids = @authors.pluck "user_id"
+    
+    rest = _(@all).reject (u) -> _(ids).contains u.id
+    @optsView.render rest
+    Verblog.highlight @optsView.el unless skip_animation
+    true
       
   #----------
   
   @OptsView: Backbone.View.extend
     template: JST["verblog/templates/author_opts"]
     
+    events:
+      "click button": "_click"
+    
     render: (opts=[]) ->
+      # sort our opts
+      opts = _(opts).sortBy (a) => a.name.split(" ").reverse().join("")
+      
       @$el.html @template options:opts
+      
+      if opts.length == 0
+        @$el.find("select").addClass("disabled")
+        @$el.find("button").addClass("disabled")
+      
+      @
+      
+    _click: (evt) ->
+      # which name is selected?
+      a = @$el.find(":selected")[0]
+      
+      if a
+        id = $(a).attr("value")
+        @trigger "click", id
   
   #----------
       
   @AuthorView: Backbone.View.extend
     tagName: "li"
+    template: JST["verblog/templates/author_view"]
+    
+    events:
+      "click button.toggle": "_toggle"
+      "click button.btn-danger": "_remove"
+      
+    initialize: ->
+      @model.on "change", => @render()
     
     render: ->
-      @$el.html @model.get("name")
+      @$el.html @template @model.toJSON()
+      @
+      
+    _toggle: ->
+      @model.save is_primary: (if @model.get("is_primary") then false else true)
+      @model.collection.sort()
+      
+    _remove: ->
+      @model.destroy()
     
   #----------
     
@@ -61,6 +122,28 @@ class Verblog.AuthorWidget
     model: @Author
     
     comparator: (a) ->
-      "#{Number(a.is_primary)}#{a.get('name').split(" ").reverse().join("")}"
+      "#{Number(!a.get("is_primary"))}#{a.get('name').split(" ").reverse().join("")}"
       
   #----------
+  
+class Verblog.PopupPreview
+  template: JST["verblog/templates/preview"]
+  
+  constructor: (btn,@url,model,fields) ->
+    $(btn).on "click", (evt) =>
+      # look up our values
+      m = {}
+      m[model] = {}
+      
+      for f in fields
+        m[model][f] = $("##{model}_#{f}").val()
+      
+      $.ajax
+        url: @url
+        type: "POST"
+        data: m
+        dataType: "json"
+        success: (r) =>
+          console.log "got success of ", r
+          
+          $( @template(preview:r.preview) ).modal()

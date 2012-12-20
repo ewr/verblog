@@ -10,20 +10,9 @@
 		
     %meta{ :property => "og:site_name", :content => Verblog::Config.title }
     
-.story_full
-    %h1= @PAGE_TITLE
-    %h3(style="margin-top: -6px")
-        Posted 
-        = @story.timestamp.strftime("%A, %B %d, %Y, at %I:%M%p")
-        by 
-        = render_authors(@story) do |a|
-            = link_to a.user.name, ""
-    
-    - cache("stories/#{@story.id}/show") do
-        - register_content @story
-        = render_asset @story, "story"
-        = raw markdown @story.intro
-        = raw markdown @story.body
+- cache("stories/#{@story.id}/show") do
+    - register_content @story
+    .story_full= render :partial => "body"
 
 %hr.light/
 

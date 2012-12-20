@@ -1,0 +1,10 @@
+%h1= @story.title
+%h4.timestamp= @story.timestamp.strftime("%A, %B %d, %Y, at %I:%M%p")
+%h4.authors 
+    By 
+    = render_authors(@story) do |a|
+        = link_to a.user.name, ""
+    
+= render_asset @story, "story"
+= raw markdown @story.intro
+= raw markdown @story.body

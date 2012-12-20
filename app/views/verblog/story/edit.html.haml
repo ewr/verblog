@@ -1,0 +1,21 @@
+- @PAGE_TITLE = "Edit Story :: #{@story.title}"
+
+.verblog_compose
+    = form_for :story, :url => story_path(@story), :html => { :method => :put } do |f|
+        %h3 Title
+        = f.text_field :title
+        
+        %h3 Story
+        = f.text_area :intro, :rows => 12
+        
+        = f.text_area :body, :rows => 18
+
+        %hr/
+        
+        = submit_tag "Save"
+        
+- content_for :sidebar do
+    %button.btn.btn-primary.preview Pop-Up Preview
+    
+    :javascript
+        _vpp = new Verblog.PopupPreview("button.preview","#{ preview_story_path(@story) }","story",['title','intro','body'])

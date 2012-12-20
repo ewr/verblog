@@ -1,0 +1,9 @@
+.modal.story_preview
+    .modal-header
+        %button.close{:data => {:dismiss => "modal"}} &times;
+        Preview
+        
+    != @preview
+    
+    .modal-footer
+        %a.btn{:href => "#"} Close

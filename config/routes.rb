@@ -12,9 +12,9 @@ Verblog::Engine.routes.draw do
       post :scheme
       post :status
       post :preview
-      post :authors
-      get :authors
     end
+    
+    resources :authors
   end
       
   match '/feed', :to => "feed#feed", :as => :feed

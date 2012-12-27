@@ -1,7 +1,8 @@
 <hr/>
 <h2>Assets</h2>
 <h3>Photo Scheme</h3>
-<%= form_for :story, :remote => true, :url => scheme_story_path(@story), :method => :post do |f| %>
+<div id="assetscheme"></div>
+<%= form_for :story, :url => scheme_story_path(@story), :method => :post do |f| %>
 <%= f.select :story_asset_scheme, Verblog::Story::ASSET_SCHEMES %>
 	<%= submit_tag "Set", :class => "btn" %>
 <% end %>
@@ -19,7 +20,10 @@
 			type:"POST",
 			data:{assets:JSON.stringify(data)},
 			success:function() {
-				$("#assetcms").effect("highlight")
+                Verblog.highlight("#assetcms")
+                if (_vsp) {
+                    _vsp.update()
+                }
 			}
 		})
 	})

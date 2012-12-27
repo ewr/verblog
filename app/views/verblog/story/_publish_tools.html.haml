@@ -5,6 +5,9 @@
 
   %hr/
   
+  :javascript
+      _vsp = new Verblog.StoryPreview(".story_full","#{preview_story_path(@story)}")
+  
   = render :partial => "set_status"
   
   = render :partial => "set_authors"

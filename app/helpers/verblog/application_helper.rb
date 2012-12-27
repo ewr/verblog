@@ -14,8 +14,8 @@ module Verblog
     # Sorts authors, runs the given block on each of them, and joins them
     def render_authors(story,&blk)
       if story.authors.length == 1
-        a = blk.call(story.authors.first)
-        return a
+        a = capture(story.authors.first,&blk)
+        return a.html_safe
       else
         authors = story.sorted_authors
         
@@ -39,16 +39,16 @@ module Verblog
       register_content "#{content.obj_key}:assets"
       
       # look for a scheme on the content object
-      scheme = content["#{context}_asset_scheme"] || "default"
+      scheme = (content.respond_to?(:asset_scheme) && content.asset_scheme) || "default"
 
       # set up our template precendence
       tmplt_opts = [
         "#{context}/#{scheme}",
-        "default/#{scheme}",
         "#{context}/default",
+        "default/#{scheme}",
         "default/default"
       ]
-
+      
       partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["verblog/shared/assets"],true) }
 
       render :partial => "verblog/shared/assets/#{partial}", :object => content.assets, :as => :assets, :locals => { :content => content }

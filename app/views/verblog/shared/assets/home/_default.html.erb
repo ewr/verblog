@@ -1,8 +1,5 @@
-<div class="pf pfW" style="width: <%= assets.first.asset.wide.width %>px">
-    <a href="<%= content.link_path %>"><%= assets.first.asset.wide.tag %></a>
-	<% if assets.count > 1 %>
-		<div class="gallery_count"><%= link_to "#{assets.count()} Photos", content.link_path %></div>
-	<% end %>
+<div class="pf pfR" style="width: <%= assets.first.asset.home.width %>px">
+    <a href="<%= content.link_path %>"><%= assets.first.asset.home.tag %></a>
     <span class="pfP">
         <%= assets.first.asset.owner %>
     </span>    

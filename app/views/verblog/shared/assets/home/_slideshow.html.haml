@@ -1,0 +1,7 @@
+.pf.pfW{ :style => "width: #{ assets.first.asset.wide.width }px"}
+    %a{ :href => content.link_path }= assets.first.asset.wide.tag
+
+    .gallery_count
+        = link_to "#{assets.count()} Images", content.link_path
+        
+    %span.pfP= assets.first.asset.owner

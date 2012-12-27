@@ -17,6 +17,6 @@ Verblog.highlight = (el) ->
             "left": el.offset().left,
             "top": el.offset().top,
             "background-color": "#ffff99",
-            "opacity": ".7",
+            "opacity": ".4",
             "z-index": "9999999"
-        }).appendTo('body').fadeOut(1000).queue -> $(this).remove();
+        }).appendTo('body').fadeOut(500).queue -> $(this).remove();

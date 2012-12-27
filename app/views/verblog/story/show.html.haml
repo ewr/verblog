@@ -10,6 +10,11 @@
 		
     %meta{ :property => "og:site_name", :content => Verblog::Config.title }
     
+- if !@story.published?
+    .alert.alert-block
+        %h4 Not Published
+        This story is currently in the #{ Verblog::Story::STATUS_TEXT[ @story.status ] } state. It must be published before it is viewable by the public.
+
 - cache("stories/#{@story.id}/show") do
     - register_content @story
     .story_full= render :partial => "body"

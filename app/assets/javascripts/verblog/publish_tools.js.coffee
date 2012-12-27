@@ -3,7 +3,7 @@
 #= require "verblog/templates/preview"
 
 class Verblog.AuthorWidget
-  constructor: (el,url) ->
+  constructor: (el,url,@vsp) ->
     console.log "AuthorWidget Go!"
     
     @el = $(el)
@@ -28,10 +28,17 @@ class Verblog.AuthorWidget
       $.post url, user_id:id, (data) =>
         @authors.add data
         @_rebuildAuthorOpts()
+        
+        # update preview if provided
+        @vsp?.update()
       .error (resp) =>
         alert("Error: #{resp.responseText}")
         
-    @authors.on "remove", => @_rebuildAuthorOpts()
+    @authors.on "remove change:is_primary", => 
+      @_rebuildAuthorOpts()
+      
+      # update preview if provided
+      @vsp?.update()
     
     # -- get our current / available authors -- #
     
@@ -51,7 +58,7 @@ class Verblog.AuthorWidget
     
     rest = _(@all).reject (u) -> _(ids).contains u.id
     @optsView.render rest
-    Verblog.highlight @optsView.el unless skip_animation
+    Verblog.highlight @el unless skip_animation
     true
       
   #----------
@@ -124,7 +131,24 @@ class Verblog.AuthorWidget
     comparator: (a) ->
       "#{Number(!a.get("is_primary"))}#{a.get('name').split(" ").reverse().join("")}"
       
-  #----------
+#----------
+
+class Verblog.StoryPreview
+  constructor: (el,@url) ->
+    @el = $(el)
+    
+  update: ->
+    $.ajax
+      url: @url
+      type: "POST"
+      data: {}
+      dataType: "json"
+      success: (r) =>
+        console.log "got success of ", r
+        @el.html r.preview
+        Verblog.highlight @el
+
+#----------
   
 class Verblog.PopupPreview
   template: JST["verblog/templates/preview"]

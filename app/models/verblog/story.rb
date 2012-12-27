@@ -184,6 +184,13 @@ module Verblog
         self.id.to_s + '-' + self.url_string
       ].join('/').gsub(/\/+/,"/")
     end
+    
+    #----------
+    
+    # FIXME: this is just a hack that should be changed with a migration
+    def asset_scheme
+      self.story_asset_scheme
+    end
   
     #----------
   

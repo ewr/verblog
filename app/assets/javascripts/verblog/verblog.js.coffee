@@ -4,10 +4,19 @@ Verblog.highlight = (el) ->
     el = $(el)
         
     # get original background color
-    orig = el.css("background-color")
+    orig = el.css("backgroundColor")
     console.log "animating #{el} from ", orig
     
-    el.animate "backgroundColor": "#ffc", "fast", "swing", ->
-        console.log "at highlight bg"
-        el.animate "background-color": orig, "fast", "swing", ->
-            console.log "highlight reversed"
+    $(el).each ->
+        el = $(this)
+        $("<div/>")
+        .width(el.outerWidth())
+        .height(el.outerHeight())
+        .css({
+            "position": "absolute",
+            "left": el.offset().left,
+            "top": el.offset().top,
+            "background-color": "#ffff99",
+            "opacity": ".4",
+            "z-index": "9999999"
+        }).appendTo('body').fadeOut(500).queue -> $(this).remove();

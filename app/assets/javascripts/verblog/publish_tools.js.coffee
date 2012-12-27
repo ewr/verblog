@@ -51,7 +51,7 @@ class Verblog.AuthorWidget
     
     rest = _(@all).reject (u) -> _(ids).contains u.id
     @optsView.render rest
-    Verblog.highlight @optsView.el unless skip_animation
+    Verblog.highlight @el unless skip_animation
     true
       
   #----------

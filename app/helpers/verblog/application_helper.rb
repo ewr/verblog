@@ -14,8 +14,8 @@ module Verblog
     # Sorts authors, runs the given block on each of them, and joins them
     def render_authors(story,&blk)
       if story.authors.length == 1
-        a = blk.call(story.authors.first)
-        return a
+        a = capture(story.authors.first,&blk)
+        return a.html_safe
       else
         authors = story.sorted_authors
         

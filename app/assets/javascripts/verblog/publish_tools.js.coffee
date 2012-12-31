@@ -133,6 +133,46 @@ class Verblog.AuthorWidget
       
 #----------
 
+class Verblog.AssetCatcher
+  constructor: (el) ->
+    @el = $(el)
+    
+    @posX = null
+    @posY = null
+    
+    @el.bind "dragover", (evt) =>
+      
+      #evt.stopPropagation()
+      #evt.preventDefault()
+          
+    @el.bind "drop", (evt) =>
+      evt = evt.originalEvent
+        
+      evt.stopPropagation()
+      evt.preventDefault()
+      
+      json = JSON.parse(evt.dataTransfer.getData 'application/json')
+      
+      if json
+        pos = 0
+        el = evt.target
+        if el.selectionStart?
+          pos = el.selectionStart
+        else if document.selection?
+          el.focus()
+          Sel = document.selection.createRange()
+          SelLength = document.selection.createRange().text.length
+          Sel.moveStart('character', -el.value.length)
+          pos = Sel.text.length - SelLength
+        
+        #console.log "Catcher got asset of ", json, evt, pos
+        
+        tag = "[ASSET #{json['id']} \"#{json['caption']}\"]"
+
+        el.value = el.value.substr(0,pos) + tag + el.value.substr(pos)
+
+#----------
+
 class Verblog.StoryPreview
   constructor: (el,@url) ->
     @el = $(el)

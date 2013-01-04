@@ -1,5 +1,5 @@
 - register_content assets.first
-.pf.pfR{ :style => "width: #{ assets.first.asset.modal.width }px"}
-	= assets.first.asset.modal.tag
+.pf.pfR{ :style => "width: #{ assets.first.asset.size(Verblog::Config.float_asset).width }px"}
+	= assets.first.asset.size(Verblog::Config.float_asset).tag
 	.pfP= assets.first.asset.owner
 	= markdown(assets.first.caption).html_safe

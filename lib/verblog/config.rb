@@ -8,7 +8,10 @@ module Verblog
       :base_url           => "",
       :description        => "",
       :markdown_assets    => true,
-      :markdown_pygments  => true
+      :markdown_pygments  => true,
+      :float_asset        => "home",
+      :home_asset         => "home",
+      :wide_asset         => "wide"
     }
     class << self
       @@config.keys.each do |f|

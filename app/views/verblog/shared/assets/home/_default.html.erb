@@ -1,4 +1,4 @@
-<div class="pf pfR" style="width: <%= assets.first.asset.home.width %>px">
+<div class="pf pfR" style="width: <%= assets.first.asset.size(Verblog::Config.home_asset).width %>px">
     <a href="<%= content.link_path %>"><%= assets.first.asset.home.tag %></a>
     <span class="pfP">
         <%= assets.first.asset.owner %>

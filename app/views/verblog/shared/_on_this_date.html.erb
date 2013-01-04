@@ -9,7 +9,7 @@
 			<% for p in y[1] %>
 				<li>
 				  <a href="<%= p.story_link %>"><%= p.title %></a>
-				  <p><%= clipping strip_tags(markdown(p.intro)) %></p>
+				  <p><%= raw clipping strip_tags(markdown(p.intro)) %></p>
 				</li>
 			<% end %>
      <% end %>

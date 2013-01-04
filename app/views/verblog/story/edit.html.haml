@@ -17,5 +17,9 @@
 - content_for :sidebar do
     %button.btn.btn-primary.preview Pop-Up Preview
     
-    :javascript
+    = render :partial => "assetCMS"
+    
+    - content_for :footerjss do
+        _vac = new Verblog.AssetCatcher("#story_intro,#story_body")
+    
         _vpp = new Verblog.PopupPreview("button.preview","#{ preview_story_path(@story) }","story",['title','intro','body'])

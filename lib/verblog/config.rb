@@ -1,8 +1,17 @@
 module Verblog
   class Config
-    @@config = {}
+    @@config = {
+      :user_model         => "::User",
+      :asset_model        => "AssetHostCore::Asset",
+      :blog_path          => "/",
+      :title              => "Verblog",
+      :base_url           => "",
+      :description        => "",
+      :markdown_assets    => true,
+      :markdown_pygments  => true
+    }
     class << self
-      ["user_model","asset_model","blog_path","title","base_url","description","markdown"].each do |f|
+      @@config.keys.each do |f|
         define_method f do |input=nil|
           @@config[f] = input if input
           @@config[f]

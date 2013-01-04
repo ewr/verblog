@@ -128,9 +128,7 @@ module Verblog
       ostatus = @story.status
     
       @story.attributes = params[:story]
-    
-      @story.status = params[:story][:status]
-    
+        
       if @story.status == Story::STATUS_LIVE && ostatus != Story::STATUS_LIVE
         # setting to publish, update timestamp
         @story.timestamp = Time.now

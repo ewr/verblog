@@ -2,7 +2,7 @@ xml.item do
   xml.title story.title
   xml.guid story.remote_story_link
   xml.link story.remote_story_link
-  xml.dc :creator, story.author.name
+  xml.dc :creator, story.author_names
 
   descript = ''
 

@@ -182,6 +182,8 @@ class Verblog.StoryPreview
       url: @url
       type: "POST"
       data: {}
+      headers:
+          "X-CSRF-Token": $("meta[name='csrf-token']").attr("content")
       dataType: "json"
       success: (r) =>
         console.log "got success of ", r

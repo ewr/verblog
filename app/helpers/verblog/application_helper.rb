@@ -63,8 +63,8 @@ module Verblog
   	# Any further back: Date
 
   	def smart_date (time)
-  	  now = Date.today()
-  	  date = time.to_date
+  	  now   = Time.find_zone(Rails.configuration.time_zone).today
+  	  date  = time.to_date
 
       key = ""
 

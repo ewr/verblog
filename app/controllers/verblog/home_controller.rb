@@ -2,9 +2,7 @@ module Verblog
   class HomeController < ApplicationController
   
     def index
-      @stories = Verblog::Story.published.paginate(
-        :page => params[:page] || 1
-      )
+      @stories = Verblog::Story.published.page(params[:page]||1)
     
       @drafts = Verblog::Story.where(:status => [Verblog::Story::STATUS_DRAFT,Verblog::Story::STATUS_PENDING]).order("status desc, updated_at desc")
     end

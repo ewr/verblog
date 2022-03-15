@@ -47,7 +47,7 @@ module Verblog
 		
       @stories = Story.published.where(
         :timestamp => @date..(@date >> 1)
-  		).order("timestamp asc").paginate(:page => params[:page] || 1,:per_page => 12)
+  		).order("timestamp asc").page(params[:page] || 1).per(12)
     end
   
     #----------

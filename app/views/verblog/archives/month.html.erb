@@ -5,7 +5,7 @@
 
 <p><b><%= link_to "Back to Archives", archives_path %></b></p>
 
-<% links = will_paginate(@stories, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
+<% links = paginate @stories  %>
 
 <% if @stories.current_page > 1 %>
 <div style="text-align: center"><%= links %></div>

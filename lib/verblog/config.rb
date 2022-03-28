@@ -11,7 +11,7 @@ module Verblog
       :markdown_pygments  => true,
       :float_asset        => "home",
       :home_asset         => "home",
-      :wide_asset         => "wide"
+      :wide_asset         => "wide",
       :home_stories       => 5,
       :archive_stories    => 12
     }

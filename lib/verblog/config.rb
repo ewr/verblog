@@ -12,6 +12,8 @@ module Verblog
       :float_asset        => "home",
       :home_asset         => "home",
       :wide_asset         => "wide"
+      :home_stories       => 5,
+      :archive_stories    => 12
     }
     class << self
       @@config.keys.each do |f|

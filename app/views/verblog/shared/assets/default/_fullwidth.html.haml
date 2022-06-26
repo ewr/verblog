@@ -1,0 +1,5 @@
+- register_content assets.first
+.pf.pfW{ :style => "width: #{ assets.first.asset.fullwidth.width }px"}
+	= assets.first.asset.fullwidth.tag
+	.pfP= assets.first.asset.owner
+	= markdown(assets.first.caption).html_safe
